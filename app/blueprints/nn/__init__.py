@@ -14,8 +14,8 @@ class Predict(Resource):
         # audio_file = request.files['bird']
         # audio_file.save('/')
         ext = ['mp3', 'tif']
-        filename = 'data/record/crow.'
-        get_sample(filename+ext[0], 'crow', 'data/record/')
+        filename = 'data/records/crow.'
+        get_sample(filename+ext[0], 'crow', 'data/records/')
         tensor = create_result(filename+ext[1])
         result = get_argmax_elem_name(tensor)
 
