@@ -23,7 +23,7 @@ class BirdsInfo(Resource):
     @namespace.doc('Get info about all birds')
     @namespace.marshal_list_with(bird_model, code=201)
     def get(self):
-        dirname = '/app/blueprints/data/txt'
+        dirname = 'data/txt'
         birds_info = []
         for filename in os.listdir(dirname):
             with open(filename, 'r', encoding='utf-8') as file:
@@ -41,7 +41,7 @@ class BirdInfo(Resource):
     @namespace.doc('Get bird info by name')
     @namespace.marshal_with(bird_model, code=201)
     def get(self, bird_name):
-        filename = f'/app/blueprints/data/txt/{bird_name}.txt'
+        filename = f'data/txt/{bird_name}.txt'
         with open(filename, 'r', encoding='utf-8') as file:
             bird_info = file.read()
             bird_rus_name, bird_description = bird_info.split('\n')
@@ -56,5 +56,5 @@ class BirdImg(Resource):
     @namespace.doc('Get bird img by name')
     def get(self, bird_name):
         ext = 'jpg'
-        filename = f'data/img/{bird_name}.{ext}'
+        filename = f'../../data/img/{bird_name}.{ext}'
         return send_file(filename, mimetype=f'image/{ext}')
