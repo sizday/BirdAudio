@@ -1,6 +1,7 @@
 from flask import jsonify, request, make_response
 from flask_restx import Namespace, Resource, fields
-
+from app.utils.create_spectrogram import get_sample
+from app.utils.predict import create_result, get_argmax_elem_name
 
 namespace = Namespace('nn', 'Neural network endpoints')
 
@@ -9,10 +10,16 @@ namespace = Namespace('nn', 'Neural network endpoints')
 class Predict(Resource):
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Predict')
-    def post(self):
-        audio_file = request.files['bird']
-        audio_file.save('/')
-        return None
+    def get(self):
+        # audio_file = request.files['bird']
+        # audio_file.save('/')
+        ext = ['mp3', 'tif']
+        filename = 'data/record/crow.'
+        get_sample(filename+ext[0], 'crow', 'data/record/')
+        tensor = create_result(filename+ext[1])
+        result = get_argmax_elem_name(tensor)
+
+        return result
 
 
 @namespace.route('/fit')
