@@ -1,7 +1,7 @@
 from flask import jsonify, request, make_response
 from flask_restx import Namespace, Resource, fields
-from app.utils.create_spectrogram import get_sample
-from app.utils.predict import create_result, get_argmax_elem_name
+from utils.create_spectrogram import get_sample
+from utils.predict import create_result, get_argmax_elem_name
 
 namespace = Namespace('nn', 'Neural network endpoints')
 
