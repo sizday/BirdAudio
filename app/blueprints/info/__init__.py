@@ -23,10 +23,10 @@ class BirdsInfo(Resource):
     @namespace.doc('Get info about all birds')
     @namespace.marshal_list_with(bird_model, code=201)
     def get(self):
-        dirname = 'data/txt'
+        dirname = 'data/txt/'
         birds_info = []
         for filename in os.listdir(dirname):
-            with open(filename, 'r', encoding='utf-8') as file:
+            with open(os.path.join(dirname, filename), 'r', encoding='utf-8') as file:
                 bird_info = file.read()
                 bird_rus_name, bird_description = bird_info.split('\n')
                 info_dict = {'name': bird_rus_name, 'description': bird_description}
@@ -44,6 +44,7 @@ class BirdInfo(Resource):
         filename = f'data/txt/{bird_name}.txt'
         with open(filename, 'r', encoding='utf-8') as file:
             bird_info = file.read()
+            print(bird_info)
             bird_rus_name, bird_description = bird_info.split('\n')
         info_dict = {'name': bird_rus_name, 'description': bird_description}
         return jsonify(info_dict)
