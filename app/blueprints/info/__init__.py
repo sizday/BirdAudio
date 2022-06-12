@@ -39,12 +39,11 @@ class BirdInfo(Resource):
     @namespace.response(404, 'Bird info not found')
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Get bird info by name')
-    @namespace.marshal_with(bird_model, code=201)
+    # @namespace.marshal_with(bird_model, code=201)
     def get(self, bird_name):
         filename = f'data/txt/{bird_name}.txt'
         with open(filename, 'r', encoding='utf-8') as file:
             bird_info = file.read()
-            print(bird_info)
             bird_rus_name, bird_description = bird_info.split('\n')
         info_dict = {'name': bird_rus_name, 'description': bird_description}
         return jsonify(info_dict)
