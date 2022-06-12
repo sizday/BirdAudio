@@ -8,7 +8,7 @@ from torchvision import transforms
 class Model(nn.Module):
     def __init__(self, name, num_classes):
         super(Model, self).__init__()
-        self.model = timm.create_model(name, pretrained=True, in_chans=3)
+        # self.model = timm.create_model(name, pretrained=True, in_chans=3)
         self.model.reset_classifier(num_classes=0)
         in_features = self.model.num_features
         self.fc = nn.Linear(in_features, num_classes)
