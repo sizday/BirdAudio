@@ -25,15 +25,17 @@ class BirdsInfo(Resource):
     def get(self):
         dirname = 'data/txt/'
         birds_info = []
-        count = 0
+        text = ''
+        desc = ''
         for filename in os.listdir(dirname):
             with open(os.path.join(dirname, filename), 'r', encoding='utf-8') as file:
                 bird_info = file.read()
                 bird_rus_name, bird_description = bird_info.split('\n')
                 info_dict = {'name': bird_rus_name, 'description': bird_description}
                 birds_info.append(info_dict)
-                count += 1
-        return jsonify({'count': count})
+                text += bird_rus_name
+                desc += bird_description
+        return jsonify({'text': text, 'desc': desc})
 
 
 @namespace.route('/info/<bird_name>')
