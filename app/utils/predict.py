@@ -40,7 +40,7 @@ def create_data_loader_once_record(audio_paths, batch_size):
         audio_samples=audio_paths
     )
 
-    return torch.utils.data.DataLoader(ds, batch_size=batch_size, num_workers=2)
+    return torch.utils.data.DataLoader(ds, batch_size=batch_size, num_workers=1)
 
 
 def load_model(path, device=torch.device('cpu'), name='resnest50d', num_classes=59):
