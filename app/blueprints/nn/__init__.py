@@ -13,10 +13,11 @@ class Predict(Resource):
     def get(self):
         # audio_file = request.files['bird']
         # audio_file.save('/')
-        ext = ['mp3', 'tif']
-        filename = 'data/records/crow.'
-        get_sample(filename+ext[0], 'crow', 'data/records/')
-        tensor = create_result(filename+ext[1])
+        filename_mp3 = 'data/records/crow.mp3'
+        filename_tif = 'data/records/crow.tif'
+        dirname = 'data/records/'
+        get_sample(filename_mp3, 'crow', dirname)
+        tensor = create_result(filename_tif)
         result = get_argmax_elem_name(tensor)
 
         return result
