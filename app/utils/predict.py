@@ -67,4 +67,4 @@ def create_result(record_path, model_path="data/model/model.pt"):
 def get_argmax_elem_name(tensor):
     index_max = torch.argmax(tensor)
 
-    return index_max
+    return str(index_max.tolist())
