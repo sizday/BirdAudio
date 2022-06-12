@@ -21,7 +21,7 @@ class BirdsInfo(Resource):
     @namespace.response(404, 'Birds info not found')
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Get info about all birds')
-    # @namespace.marshal_list_with(bird_model, code=201)
+    @namespace.marshal_list_with(bird_model)
     def get(self):
         dirname = 'data/txt/'
         birds_info = []
@@ -31,7 +31,7 @@ class BirdsInfo(Resource):
                 bird_rus_name, bird_description = bird_info.split('\n')
                 info_dict = {'name': bird_rus_name, 'description': bird_description}
                 birds_info.append(info_dict)
-        return jsonify(info_dict)
+        return jsonify(birds_info)
 
 
 @namespace.route('/info/<bird_name>')
@@ -56,5 +56,5 @@ class BirdImg(Resource):
     @namespace.doc('Get bird img by name')
     def get(self, bird_name):
         ext = 'jpg'
-        filename = f'../../data/img/{bird_name}.{ext}'
+        filename = f'data/img/{bird_name}.{ext}'
         return send_file(filename, mimetype=f'image/{ext}')
