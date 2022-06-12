@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restx import Api
 from blueprints.info import namespace as info_ns
-from blueprints.model import namespace as model_ns
+from blueprints.nn import namespace as nn_ns
 
 async_mode = None
 thread = None
@@ -16,4 +16,4 @@ api_extension = Api(
 )
 
 api_extension.add_namespace(info_ns)
-api_extension.add_namespace(model_ns)
+api_extension.add_namespace(nn_ns)
