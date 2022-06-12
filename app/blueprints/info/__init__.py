@@ -23,13 +23,13 @@ class BirdsInfo(Resource):
     @namespace.doc('Get info about all birds')
     @namespace.marshal_list_with(bird_model, code=201)
     def get(self):
-        dirname = '/data/txt'
+        dirname = 'data/txt'
         birds_info = []
         for filename in os.listdir(dirname):
-            with open(filename, 'r') as file:
+            with open(filename, 'r', encoding='utf-8') as file:
                 bird_info = file.read()
-                bird_name, ext = os.path.splitext(filename)
-                info_dict = {'name': bird_name, 'description': bird_info}
+                bird_rus_name, bird_description = bird_info.split('\n')
+                info_dict = {'name': bird_rus_name, 'description': bird_description}
                 birds_info.append(info_dict)
         return jsonify(birds_info)
 
@@ -41,10 +41,11 @@ class BirdInfo(Resource):
     @namespace.doc('Get bird info by name')
     @namespace.marshal_with(bird_model, code=201)
     def get(self, bird_name):
-        filename = f'/data/txt/{bird_name}.txt'
-        with open(filename, 'r') as file:
+        filename = f'data/txt/{bird_name}.txt'
+        with open(filename, 'r', encoding='utf-8') as file:
             bird_info = file.read()
-        info_dict = {'name': bird_name, 'description': bird_info}
+            bird_rus_name, bird_description = bird_info.split('\n')
+        info_dict = {'name': bird_rus_name, 'description': bird_description}
         return jsonify(info_dict)
 
 
@@ -55,5 +56,5 @@ class BirdImg(Resource):
     @namespace.doc('Get bird img by name')
     def get(self, bird_name):
         ext = 'jpg'
-        filename = f'/data/img/{bird_name}.{ext}'
+        filename = f'data/img/{bird_name}.{ext}'
         return send_file(filename, mimetype=f'image/{ext}')
