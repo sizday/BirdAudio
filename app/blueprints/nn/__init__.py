@@ -2,10 +2,10 @@ from flask import jsonify, request, make_response
 from flask_restx import Namespace, Resource, fields
 
 
-namespace = Namespace('predict', 'Predict endpoints')
+namespace = Namespace('nn', 'Neural network endpoints')
 
 
-@namespace.route('')
+@namespace.route('/predict')
 class Predict(Resource):
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Predict')
@@ -13,3 +13,11 @@ class Predict(Resource):
         audio_file = request.files['bird']
         audio_file.save('/')
         return None
+
+
+@namespace.route('/fit')
+class Fit(Resource):
+    @namespace.response(500, 'Internal Server error')
+    @namespace.doc('Fit')
+    def post(self):
+        pass

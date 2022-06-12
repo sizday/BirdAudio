@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask_restx import Api
-from blueprints.predict import namespace as predict_ns
+from blueprints.info import namespace as info_ns
+from blueprints.nn import namespace as nn_ns
 
 async_mode = None
 thread = None
@@ -10,8 +11,9 @@ api_extension = Api(
     blueprint,
     title='BirdAudio REST',
     version='1.0',
-    description='API BoardFriends',
+    description='API BirdAudio',
     doc='/doc'
 )
 
-api_extension.add_namespace(predict_ns)
+api_extension.add_namespace(info_ns)
+api_extension.add_namespace(nn_ns)

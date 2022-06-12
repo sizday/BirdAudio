@@ -1,25 +1,15 @@
 version: '3.1'
 
 services:
-  db:
-    container_name: database
-    image: sameersbn/postgresql:10-2
-    env_file:
-      - "app/.env"
-
   flask:
-    container_name: api
+    container_name: bird_api
     build:
         context: ./app
     command: python main.py
     ports:
       - "5000:5000"
-    external_links:
-      - database
     env_file:
       - "app/.env"
-    depends_on:
-      - 'db'
 
 networks:
   overlay:
