@@ -4,24 +4,12 @@ import os
 
 namespace = Namespace('birds', 'Info endpoints')
 
-bird_model = namespace.model('Bird', {
-    'name': fields.String(
-        readonly=True,
-        description='Name of bird'
-    ),
-    'description': fields.String(
-        readonly=True,
-        description='Text about bird'
-    )
-})
-
 
 @namespace.route('/info')
 class BirdsInfo(Resource):
     @namespace.response(404, 'Birds info not found')
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Get info about all birds')
-    @namespace.marshal_list_with(bird_model)
     def get(self):
         dirname = 'data/txt/'
         birds_info = []
@@ -39,14 +27,12 @@ class BirdInfo(Resource):
     @namespace.response(404, 'Bird info not found')
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Get bird info by name')
-    @namespace.marshal_with(bird_model)
     def get(self, bird_name):
         filename = f'data/txt/{bird_name}.txt'
         with open(filename, 'r', encoding='utf-8') as file:
             bird_info = file.read()
             bird_rus_name, bird_description = bird_info.split('\n')
-        # info_dict = {'name': bird_rus_name, 'description': bird_description}
-        info_dict = bird_model(name=bird_rus_name, description=bird_description)
+        info_dict = {'name': bird_rus_name, 'description': bird_description}
         return jsonify(info_dict)
 
 
