@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restx import Api
-from blueprints.predict import namespace as predict_ns
-from blueprints.fit import namespace as fit_ns
+from blueprints.info import namespace as info_ns
+from blueprints.model import namespace as model_ns
 
 async_mode = None
 thread = None
@@ -15,5 +15,5 @@ api_extension = Api(
     doc='/doc'
 )
 
-api_extension.add_namespace(predict_ns)
-api_extension.add_namespace(fit_ns)
+api_extension.add_namespace(info_ns)
+api_extension.add_namespace(model_ns)
