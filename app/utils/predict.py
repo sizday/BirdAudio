@@ -43,7 +43,7 @@ def create_data_loader_once_record(audio_paths, batch_size):
     return torch.utils.data.DataLoader(ds, batch_size=batch_size, num_workers=2)
 
 
-def load_model(path, name='predict', num_classes=59):
+def load_model(path, name='resnest50d', num_classes=59):
     model = Model(name, num_classes)
     model.load_state_dict(torch.load(path))
 
