@@ -21,17 +21,19 @@ class BirdsInfo(Resource):
     @namespace.response(404, 'Birds info not found')
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Get info about all birds')
-    @namespace.marshal_list_with(bird_model, code=201)
+    # @namespace.marshal_list_with(bird_model, code=201)
     def get(self):
         dirname = 'data/txt/'
         birds_info = []
+        count = 0
         for filename in os.listdir(dirname):
             with open(os.path.join(dirname, filename), 'r', encoding='utf-8') as file:
                 bird_info = file.read()
                 bird_rus_name, bird_description = bird_info.split('\n')
                 info_dict = {'name': bird_rus_name, 'description': bird_description}
                 birds_info.append(info_dict)
-        return jsonify(birds_info)
+                count += 1
+        return jsonify({'count': count})
 
 
 @namespace.route('/info/<bird_name>')
