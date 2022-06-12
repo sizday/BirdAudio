@@ -45,7 +45,8 @@ class BirdInfo(Resource):
         with open(filename, 'r', encoding='utf-8') as file:
             bird_info = file.read()
             bird_rus_name, bird_description = bird_info.split('\n')
-        info_dict = {'name': bird_rus_name, 'description': bird_description}
+        # info_dict = {'name': bird_rus_name, 'description': bird_description}
+        info_dict = bird_model(name=bird_rus_name, description=bird_description)
         return jsonify(info_dict)
 
 
