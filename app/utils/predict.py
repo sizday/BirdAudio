@@ -79,4 +79,4 @@ def get_argmax_elem_name(tensor, filepath="data/model/bird.csv"):
     index_str = int(str(index_max.tolist()))
     bird_index_df = pd.read_csv(filepath)
     bird_name = bird_index_df.loc[bird_index_df.class_label == index_str].bird.unique()[0]
-    return index_str
+    return bird_name
