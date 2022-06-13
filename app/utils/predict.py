@@ -47,7 +47,7 @@ def create_data_loader_once_record(audio_paths, batch_size):
     return data_loader
 
 
-def load_model(path, device=torch.device('cpu'), name='resnest50d', num_classes=59):
+def load_model(path, device=torch.device('cpu'), name='resnest50d', num_classes=26):
     model = Model(name, num_classes)
     model.load_state_dict(torch.load(path, map_location=device))
 
