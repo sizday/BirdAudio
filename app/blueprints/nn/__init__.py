@@ -13,7 +13,7 @@ namespace = Namespace('nn', 'Neural network endpoints')
 class Predict(Resource):
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Predict')
-    def get(self):
+    def post(self):
         dirname = 'data/records/'
         audio_file = request.files['audio']
         filename = secure_filename(audio_file.filename)
