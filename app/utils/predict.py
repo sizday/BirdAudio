@@ -76,7 +76,7 @@ def create_result(record_path, model_path="data/model/model.pt"):
 
 def get_argmax_elem_name(tensor, filepath="data/model/bird.csv"):
     index_max = torch.argmax(tensor)
-    index_str = str(index_max.tolist())
+    index_str = int(str(index_max.tolist()))
     bird_index_df = pd.read_csv(filepath)
-    # bird_name = bird_index_df.loc[bird_index_df.class_label == index_str].bird.unique()[0]
+    bird_name = bird_index_df.loc[bird_index_df.class_label == index_str].bird.unique()[0]
     return index_str
