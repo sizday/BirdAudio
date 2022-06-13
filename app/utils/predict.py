@@ -47,8 +47,15 @@ def create_data_loader_once_record(audio_paths, batch_size):
     return data_loader
 
 
+def get_model_for_birds(model, num_classes):
+    in_features = model.fc.in_features
+    model.fc = nn.Linear(in_features, num_classes)
+    return model
+
+
 def load_model(path, device=torch.device('cpu'), name='resnest50d', num_classes=26):
     model = Model(name, num_classes)
+    model = get_model_for_birds(model, num_classes)
     model.load_state_dict(torch.load(path, map_location=device))
 
     return model
