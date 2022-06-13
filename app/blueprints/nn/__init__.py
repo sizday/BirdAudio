@@ -22,14 +22,11 @@ class Predict(Resource):
         filename_tif = os.path.join(dirname, f"{name}.tif")
         audio_file.save(filename_mp3)
 
-
-        """filename_tif = 'data/records/crow.tif'
-        dirname = 'data/records/'
-        get_sample(filename_mp3, 'crow', dirname)
+        get_sample(filename_mp3, filename, dirname)
         tensor = create_result(filename_tif)
-        result = get_argmax_elem_name(tensor)"""
+        result = get_argmax_elem_name(tensor)
 
-        return filename_tif
+        return result
 
 
 @namespace.route('/fit')
