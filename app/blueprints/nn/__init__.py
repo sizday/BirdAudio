@@ -21,8 +21,8 @@ class Predict(Resource):
         filename_mp3 = os.path.join(dirname, filename)
         filename_tif = os.path.join(dirname, f"{name}.tif")
 
-        """audio_file.save(filename_mp3)
-        get_sample(filename_mp3, name, dirname)
+        audio_file.save(filename)
+        """get_sample(filename_mp3, name, dirname)
         
         tensor = create_result(filename_tif)
         bird_name = get_argmax_elem_name(tensor)
