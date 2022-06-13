@@ -3,6 +3,8 @@ import torch
 import torch.nn as nn
 import timm
 from torchvision import transforms
+import warnings
+warnings.filterwarnings('ignore')
 
 
 class Model(nn.Module):
