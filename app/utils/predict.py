@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import timm
 from torchvision import transforms
+import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -66,7 +67,9 @@ def create_result(record_path, model_path="data/model/model.pt"):
     return result
 
 
-def get_argmax_elem_name(tensor):
+def get_argmax_elem_name(tensor, filepath="data/model/bird.csv"):
     index_max = torch.argmax(tensor)
-
-    return str(index_max.tolist())
+    index_str = str(index_max.tolist()[0])
+    bird_index_df = pd.read_csv(filepath)
+    bird_name = bird_index_df.loc[bird_index_df.class_label == index_str].bird.unique()[0]
+    return bird_name
