@@ -17,7 +17,7 @@ class Predict(Resource):
         dirname = 'data/records/'
         audio_file = request.files['audio']
         filename = secure_filename(audio_file.filename)
-        audio_file.save(dirname)
+        audio_file.save(os.path.join(dirname, filename))
 
         filename_mp3 = os.path.join(dirname, filename)
         """filename_mp3 = 'data/records/crow.mp3'
