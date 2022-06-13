@@ -1,7 +1,10 @@
+import os.path
+
 from flask import jsonify, request, make_response
 from flask_restx import Namespace, Resource, fields
 from utils.create_spectrogram import get_sample
 from utils.predict import create_result, get_argmax_elem_name
+from werkzeug.utils import secure_filename
 
 namespace = Namespace('nn', 'Neural network endpoints')
 
@@ -10,17 +13,24 @@ namespace = Namespace('nn', 'Neural network endpoints')
 class Predict(Resource):
     @namespace.response(500, 'Internal Server error')
     @namespace.doc('Predict')
-    def get(self):
-        # audio_file = request.files['bird']
-        # audio_file.save('/')
-        filename_mp3 = 'data/records/crow.mp3'
-        filename_tif = 'data/records/crow.tif'
+    def post(self):
         dirname = 'data/records/'
-        get_sample(filename_mp3, 'crow', dirname)
-        tensor = create_result(filename_tif)
-        result = get_argmax_elem_name(tensor)
+        audio_file = request.files['audio']
+        filename = secure_filename(audio_file.filename)
+        name, ext = os.path.splitext(filename)
+        filename_mp3 = os.path.join(dirname, filename)
+        filename_tif = os.path.join(dirname, f"{name}.tif")
 
-        return result
+        audio_file.save(filename_mp3)
+        get_sample(filename_mp3, name, dirname)
+
+        tensor = create_result(filename_tif)
+        bird_name = get_argmax_elem_name(tensor)
+        os.remove(filename_mp3)
+        os.remove(filename_tif)
+        result = {"name": bird_name}
+
+        return jsonify(result)
 
 
 @namespace.route('/fit')

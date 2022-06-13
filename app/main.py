@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 app.config.from_object(Config)
 app.register_blueprint(basic_endpoints)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.app_context().push()
 
 

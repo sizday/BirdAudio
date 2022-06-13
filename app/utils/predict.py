@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import timm
 from torchvision import transforms
+import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -46,8 +47,15 @@ def create_data_loader_once_record(audio_paths, batch_size):
     return data_loader
 
 
-def load_model(path, device=torch.device('cpu'), name='resnest50d', num_classes=59):
+def get_model_for_birds(model, num_classes):
+    in_features = model.fc.in_features
+    model.fc = nn.Linear(in_features, num_classes)
+    return model
+
+
+def load_model(path, device=torch.device('cpu'), name='resnest50d', num_classes=26):
     model = Model(name, num_classes)
+    model = get_model_for_birds(model, num_classes)
     model.load_state_dict(torch.load(path, map_location=device))
 
     return model
@@ -66,7 +74,9 @@ def create_result(record_path, model_path="data/model/model.pt"):
     return result
 
 
-def get_argmax_elem_name(tensor):
+def get_argmax_elem_name(tensor, filepath="data/model/bird.csv"):
     index_max = torch.argmax(tensor)
-
-    return str(index_max.tolist())
+    index_str = int(str(index_max.tolist()))
+    bird_index_df = pd.read_csv(filepath)
+    bird_name = bird_index_df.loc[bird_index_df.class_label == index_str].bird.unique()[0]
+    return bird_name
