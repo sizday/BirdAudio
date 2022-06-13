@@ -17,17 +17,19 @@ class Predict(Resource):
         dirname = 'data/records/'
         audio_file = request.files['audio']
         filename = secure_filename(audio_file.filename)
-        audio_file.save(os.path.join(dirname, filename))
-
+        name, ext = os.path.splitext(filename)
         filename_mp3 = os.path.join(dirname, filename)
-        """filename_mp3 = 'data/records/crow.mp3'
-        filename_tif = 'data/records/crow.tif'
+        filename_tif = os.path.join(dirname, f"{name}.tif")
+        audio_file.save(filename_mp3)
+
+
+        """filename_tif = 'data/records/crow.tif'
         dirname = 'data/records/'
         get_sample(filename_mp3, 'crow', dirname)
         tensor = create_result(filename_tif)
         result = get_argmax_elem_name(tensor)"""
 
-        return filename_mp3
+        return filename_tif
 
 
 @namespace.route('/fit')
