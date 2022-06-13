@@ -22,7 +22,7 @@ class Predict(Resource):
         filename_tif = os.path.join(dirname, f"{name}.tif")
         audio_file.save(filename_mp3)
 
-        get_sample(filename_mp3, filename, dirname)
+        get_sample(filename_mp3, name, dirname)
         tensor = create_result(filename_tif)
         result = get_argmax_elem_name(tensor)
 
