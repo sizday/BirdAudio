@@ -25,6 +25,8 @@ class Predict(Resource):
         get_sample(filename_mp3, name, dirname)
         tensor = create_result(filename_tif)
         result = get_argmax_elem_name(tensor)
+        os.remove(filename_mp3)
+        os.remove(filename_tif)
 
         return result
 
